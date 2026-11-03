@@ -217,6 +217,12 @@ you did not ask.
 5. **A clean-build gate fixture asserted PASS and got INCONCLUSIVE.** MDE 5.9pp
    against a 2.0pp allowance at n=400. The tool was right; I fixed the test and
    kept the case as its own assertion.
+6. **The test suites gave wrong answers under pytest, in both directions.** The
+   function-style suites recorded failures without raising, so pytest showed a
+   false green on broken code; the module-level suites ran their checks at
+   import with nothing to collect, so pytest showed a false red ("no tests
+   ran", exit 5) on passing code. Both are fixed — script and pytest runners now
+   agree, verified by breaking the code on purpose under each.
 
 ## Layout
 

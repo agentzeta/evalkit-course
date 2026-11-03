@@ -206,10 +206,22 @@ check("naive bayes returns one prediction per test row",
       len(naive_bayes_fit_predict(texts[:100], L[:100], texts[100:])) == 100)
 
 
-print(f"\n{_PASS} checks passed")
-if _FAIL:
-    print(f"{len(_FAIL)} FAILED:")
-    for f in _FAIL:
-        print(f"  - {f}")
-    sys.exit(1)
-print(f"all green ({_PASS} checks)")
+def test_all_checks_passed() -> None:
+    """Lets pytest run this file correctly.
+
+    The checks above execute at import. Without this sentinel pytest would find
+    no test function: a passing suite would report "no tests ran" (exit 5, a
+    false red) and a failing one would exit during collection. This turns the
+    recorded result into one pytest outcome.
+    """
+    assert not _FAIL, f"{len(_FAIL)} check(s) failed: " + "; ".join(_FAIL[:10])
+
+
+if __name__ == "__main__":
+    print(f"\n{_PASS} checks passed")
+    if _FAIL:
+        print(f"{len(_FAIL)} FAILED:")
+        for f in _FAIL:
+            print(f"  - {f}")
+        sys.exit(1)
+    print(f"all green ({_PASS} checks)")
